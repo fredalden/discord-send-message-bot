@@ -1,6 +1,6 @@
 import discord
 import logging
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 BOT_TOKEN = config['KEY']
@@ -13,7 +13,8 @@ handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-client = discord.Client()
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_message(message):
@@ -25,6 +26,5 @@ async def on_message(message):
     if message.author.id == CELUI_A_FAIRE_CHIER:
         await message.author.send(f'{MESSAGE_QUI_FAIT_CHIER}')
         logger.info(f"Sending {MESSAGE_QUI_FAIT_CHIER} to {message.author}")
-        break
 
 client.run(f'{BOT_TOKEN}')
